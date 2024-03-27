@@ -1,20 +1,46 @@
 :root 
 {
-    --color-primary: #000000;
+    --color-primary: #0f380f;
     --color-sea: linear-gradient(to bottom, #00bfff, #030363);
     --color-secondary: #ffffff;
-    --color-glow: #05ffbc;
-    --cube-image: url(../images/submarine.svg);
-    --torpedo-image: url(../images/torpedo.svg);
+    --color-tertiary: #8bac0f;
+    --color-gameboy: #C0B0C0;
+    --cube-image: url(../images/submarine.gif);
+    --torpedo-image: url(../images/torpedo.png);
     --explosion-image: url(../images/explosion.png);
+    --sea-bottom-image: url(../images/seabottom.png);
+    --gameboy-frame-image: url(../images/gameboy.png);
 }
 
 body 
 {
-    background: var(--color-sea);
+    background: var(--color-tertiary);
     color: var(--color-secondary);
     height: 100vh;
     overflow: hidden;
+}
+
+#gameboyframe 
+{
+    background-image: var(--gameboy-frame-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    pointer-events: none;
+}
+
+#seabottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 200px;
+    background-image: var(--sea-bottom-image);
+    background-repeat: repeat-x;
+    z-index: 0;
 }
 
 .cube {
@@ -28,19 +54,30 @@ body
     aspect-ratio: 1;
     transform: translate(-50%, -50%);
     border-radius: 10px;
+    z-index: 1;
 }
 
 .torpedo {
     background-image: var(--torpedo-image);
     background-size: cover;
     background-repeat: no-repeat;
-    position: fixed;
+    position: absolute;
     width: 100px;
-    left: 50%;
-    top: 50%;
-    aspect-ratio: 1;
-    transform: translate(-50%, -50%);
-    border-radius: 10px;
+    height: 10px;
+    animation-name: fire;
+    animation-timing-function: linear;
+}
+
+@keyframes fire {
+    0% {
+        transform: translateY(-50px);
+    }
+    50% {
+        transform: translateY(50px);
+    }
+    100% {
+        transform: translateY(50px) translateX(100vw);
+    }
 }
 
 .explosion {
