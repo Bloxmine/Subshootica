@@ -1,0 +1,88 @@
+:root 
+{
+    --color-primary: #000000;
+    --color-sea: linear-gradient(to bottom, #00bfff, #030363);
+    --color-secondary: #ffffff;
+    --color-glow: #05ffbc;
+    --cube-image: url(../images/submarine.svg);
+    --torpedo-image: url(../images/torpedo.svg);
+    --explosion-image: url(../images/explosion.png);
+}
+
+body 
+{
+    background: var(--color-sea);
+    color: var(--color-secondary);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.cube {
+    background-image: var(--cube-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: fixed;
+    width: 200px;
+    left: 50%;
+    top: 50%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+}
+
+.torpedo {
+    background-image: var(--torpedo-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: fixed;
+    width: 100px;
+    left: 50%;
+    top: 50%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+}
+
+.explosion {
+    background-image: var(--explosion-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: fixed;
+    width: 200px;
+    left: 50%;
+    top: 50%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+
+}
+
+@keyframes vibrate {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    25% {
+        transform: translate(-50%, -50%) rotate(5deg);
+    }
+    50% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    75% {
+        transform: translate(-50%, -50%) rotate(-5deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+
+@keyframes glowing {
+    0% {
+        box-shadow: 0 0 20px var(--color-glow);
+    }
+    50% {
+        box-shadow: 0 0 100px var(--color-glow);
+    }
+    100% {
+        box-shadow: 0 0 20px var(--color-glow);
+    }
+}
