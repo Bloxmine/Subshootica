@@ -1,0 +1,221 @@
+:root 
+{
+    --color-primary: #0f380f;
+    --color-sea: linear-gradient(to bottom, #00bfff, #030363);
+    --color-secondary: #ffffff;
+    --color-tertiary: #8bac0f;
+    --color-gameboy: #C0B0C0;
+    --cube-image: url(../images/submarine.gif);
+    --torpedo-image: url(../images/torpedo.png);
+    --explosion-image: url(../images/explosion.png);
+    --sea-bottom-image: url(../images/seabottom.png);
+    --gameboy-frame-image: url(../images/gameboy.png);
+    --squid-image: url(../images/squiddy.gif);
+    --cartidge-image: url(../images/subshootica.png);
+    --mine-image: url(../images/mine.gif);
+    --background-front-image: url(../images/bg1.png);
+}
+
+body 
+{
+    background: var(--color-tertiary);
+    color: var(--color-secondary);
+    height: 100vh;
+    overflow: hidden;
+}
+
+#cartridge 
+{
+    background-image: var(--cartidge-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: fixed;
+    width: 350px;
+    height: 400px;
+    left: 15%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    z-index: 5;
+}
+
+#gameboyframe 
+{
+    background-image: var(--gameboy-frame-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 4;
+    pointer-events: none;
+}
+
+#background1 {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 200px;
+    background-image: url('../images/bg1.png');
+    background-repeat: repeat-x;
+    z-index: 2;
+    animation: parallax 30s linear infinite;
+}
+
+#background2 {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 200px;
+    background-image: url('../images/bg2.png');
+    background-repeat: repeat-x;
+    z-index: 1;
+    animation: parallax 20s linear infinite;
+}
+
+#background3 {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 200px;
+    background-image: url('../images/bg3.png');
+    background-repeat: repeat-x;
+    z-index: 0;
+    animation: parallax 10s linear infinite;
+}
+
+@keyframes parallax {
+    0% { background-position: 100% 0%; }
+    100% { background-position: 0% 0%; }
+}
+
+.squid {
+    background-image: var(--squid-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100px;
+    left: 50%;
+    top: 50%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    z-index: 1;
+    position: absolute;
+    animation-name: travel;
+}
+
+.mine {
+    background-image: var(--mine-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100px;
+    left: 50%;
+    top: 50%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    z-index: 1;
+    position: absolute;
+    animation-name: travel;
+}
+
+@keyframes travel {
+    from {
+        left: 100%;
+    }
+    to {
+        left: -100%;
+    }
+}
+
+@keyframes swim {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+    50% {
+        transform: translateY(0) rotate(0deg);
+    }
+    75% {
+        transform: translateY(10px) rotate(-5deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+.cube {
+    background-image: var(--cube-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: fixed;
+    width: 200px;
+    left: 50%;
+    top: 50%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    z-index: 4;
+}
+
+.torpedo {
+    background-image: var(--torpedo-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    aspect-ratio: 1;
+    animation-name: fire;
+    animation-timing-function: linear;
+    z-index: 3;
+}
+
+@keyframes fire {
+    0% {
+        transform: translateY(-50px);
+    }
+    50% {
+        transform: translateY(50px);
+    }
+    100% {
+        transform: translateY(50px) translateX(100vw);
+    }
+}
+
+.explosion {
+    background-image: var(--explosion-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: fixed;
+    width: 200px;
+    left: 50%;
+    top: 50%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+
+}
+
+@keyframes vibrate {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    25% {
+        transform: translate(-50%, -50%) rotate(5deg);
+    }
+    50% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    75% {
+        transform: translate(-50%, -50%) rotate(-5deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+}
