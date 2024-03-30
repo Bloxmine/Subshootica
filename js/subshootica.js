@@ -1,4 +1,4 @@
-// cube variable
+// cube variable, is actually the submarine.
 const cube = document.querySelector('.cube');
 let isPickedUp = false;
 
@@ -26,12 +26,12 @@ document.addEventListener('mousemove', (event) => {
     }
 });
 
-let canFire = true; // Initialize flag
+let canFire = true;
 
 document.addEventListener('keydown', (event) => {
     if (isPickedUp && event.code === 'Space' && canFire) {
-        canFire = false; // Set flag to false
-
+        canFire = false;
+        // theres a lot of stupid code in here. it does seem to work.
         const torpedo = document.createElement('div');
         torpedo.classList.add('torpedo');
         document.body.appendChild(torpedo);
@@ -42,9 +42,9 @@ document.addEventListener('keydown', (event) => {
         const torpedoY = cubeRect.bottom;
         torpedo.style.left = torpedoX + 'px';
         torpedo.style.top = torpedoY + 'px';
-        const animationDuration = 2; // Adjust as needed
-        const initialVelocity = 10; // Adjust as needed
-        const acceleration = 2; // Adjust as needed
+        const animationDuration = 2;
+        const initialVelocity = 10;
+        const acceleration = 2;
         const finalVelocity = initialVelocity + acceleration * animationDuration;
         torpedo.style.animation = `fire ${animationDuration}s linear`;
         torpedo.style.animationTimingFunction = `cubic-bezier(0, 0, 1, ${finalVelocity / initialVelocity})`;
@@ -52,7 +52,6 @@ document.addEventListener('keydown', (event) => {
             document.body.removeChild(torpedo);
         }, animationDuration * 1000);
 
-        // Reset flag after 200ms
         setTimeout(() => {
             canFire = true;
         }, 200);
@@ -61,7 +60,7 @@ document.addEventListener('keydown', (event) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     setInterval(() => {
-        const numDivs = 1; // Adjust as needed
+        const numDivs = 1;
         for (let i = 0; i < numDivs; i++) {
             const squid = document.createElement('div');
             squid.classList.add('squid');
@@ -70,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const viewportHeight = window.innerHeight;
             const randomY = Math.floor(Math.random() * (viewportHeight - squidHeight));
             squid.style.top = randomY + 'px';
-            const animationDuration = 20; // Adjust as needed
+            const animationDuration = 20;
             squid.style.animationDuration = `${animationDuration}s`;
             setTimeout(() => {
                 document.body.removeChild(squid);
@@ -81,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     setInterval(() => {
-        const numDivs = 1; // Adjust as needed
+        const numDivs = 1;
         for (let i = 0; i < numDivs; i++) {
             const mine = document.createElement('div');
             mine.classList.add('mine');
@@ -90,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const viewportHeight = window.innerHeight;
             const randomY = Math.floor(Math.random() * (viewportHeight - mineHeight));
             mine.style.top = randomY + 'px';
-            const animationDuration = 50; // Adjust as needed
+            const animationDuration = 50;
             mine.style.animationDuration = `${animationDuration}s`;
             setTimeout(() => {
                 document.body.removeChild(mine);
@@ -116,7 +115,7 @@ function detectCollision(element1, element2) {
              rect2.bottom < rect1.top);
 }
 
-let score = 0; // Initialize score
+let score = 0; // score init
 
 setInterval(() => {
     const torpedoes = document.querySelectorAll('.torpedo');
@@ -126,28 +125,17 @@ setInterval(() => {
     mines.forEach(mine => {
         torpedoes.forEach(torpedo => {
             if (detectCollision(torpedo, mine)) {
-                // Check if mine has been hit before
+                // mine hit detection, only detects torpedoes
                 if (!mine.hasBeenHit) {
-                    // Decrement score
                     score--;
-
-                    // Update score display
                     document.getElementById('score').textContent = `SCORE: ${score}`;
-
-                    // Mark mine as hit
                     mine.hasBeenHit = true;
                 }
 
-                // Pause mine animation
                 mine.style.animationPlayState = 'paused';
-
-                // Change mine image to explosion
                 mine.style.backgroundImage = 'url(../images/explosion.png)';
 
-                // Remove torpedo
                 document.body.removeChild(torpedo);
-
-                // Remove mine after 500ms
                 setTimeout(() => {
                     document.body.removeChild(mine);
                 }, 500);
@@ -158,32 +146,20 @@ setInterval(() => {
     squids.forEach(squid => {
         torpedoes.forEach(torpedo => {
             if (detectCollision(torpedo, squid)) {
-                // Check if squid has been hit before
+                // squid hit detection, same as mines
                 if (!squid.hasBeenHit) {
-                    // Increment score
                     score++;
-
-                    // Update score display
                     document.getElementById('score').textContent = `SCORE: ${score}`;
-
-                    // Mark squid as hit
                     squid.hasBeenHit = true;
                 }
-
-                // Pause squid animation
                 squid.style.animationPlayState = 'paused';
-
-                // Change squid image to explosion
                 squid.style.backgroundImage = 'url(../images/explosion.png)';
 
-                // Remove torpedo
                 document.body.removeChild(torpedo);
-
-                // Remove squid after 500ms
                 setTimeout(() => {
                     document.body.removeChild(squid);
                 }, 500);
             }
         });
     });
-}, 100); // Adjust as needed
+}, 100);

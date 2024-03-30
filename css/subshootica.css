@@ -51,12 +51,31 @@ body
     z-index: 5;
 }
 
+#instructions 
+{
+    position: fixed;
+    font: 1em var(--font-main);
+    color: var(--color-secondary);
+    left: 51%;
+    top: 9%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 #gameboyframe 
 {
     background-image: var(--gameboy-frame-image);
     background-size: cover;
     background-repeat: no-repeat;
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     z-index: 4;
@@ -72,7 +91,7 @@ body
     background-image: url('../images/bg1.png');
     background-repeat: repeat-x;
     z-index: 2;
-    animation: parallax 30s linear infinite;
+    animation: parallax 10s linear infinite;
 }
 
 #background2 {
@@ -96,12 +115,12 @@ body
     background-image: url('../images/bg3.png');
     background-repeat: repeat-x;
     z-index: 0;
-    animation: parallax 10s linear infinite;
+    animation: parallax 30s linear infinite;
 }
 
 @keyframes parallax {
-    0% { background-position: 100% 0%; }
-    100% { background-position: 0% 0%; }
+    0% { background-position: 0% 0%; }
+    100% { background-position: -100% 0%; }
 }
 
 .squid {
@@ -232,5 +251,5 @@ body
 
 @font-face {
     font-family: 'NES';
-    src: url( '../fonts/NES.woff' ) format('woff');
+    src: url( '../fonts/nes.woff' ) format('woff');
 }
