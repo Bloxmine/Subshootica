@@ -15,6 +15,7 @@
     --mine-image: url(../images/mine.gif);
     --background-front-image: url(../images/bg1.png);
     --font-main: 'NES', sans-serif;
+    --powerup-image: url(../images/powerup.gif);
 }
 
 body 
@@ -138,6 +139,21 @@ body
     animation-name: travel;
 }
 
+.powerup {
+    background-image: var(--powerup-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100px;
+    left: 50%;
+    top: 50%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    z-index: 1;
+    position: absolute;
+    animation: horizontal 10s linear infinite, vertical 1s ease-in-out infinite;
+}
+
 .mine {
     background-image: var(--mine-image);
     background-size: cover;
@@ -151,6 +167,27 @@ body
     z-index: 1;
     position: absolute;
     animation-name: travel;
+}
+
+@keyframes horizontal {
+    0% {
+        left: 100%;
+    }
+    100% {
+        left: -100%;
+    }
+}
+
+@keyframes vertical {
+    0%, 50%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-15px)
+    }
+    75% {
+        transform: translateY(15px);
+    }
 }
 
 @keyframes travel {

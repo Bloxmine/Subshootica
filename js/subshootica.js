@@ -116,6 +116,7 @@ function detectCollision(element1, element2) {
 }
 
 let score = 0; // score init
+let checkIfTen = 0; // check if score is 10
 
 setInterval(() => {
     const torpedoes = document.querySelectorAll('.torpedo');
@@ -162,4 +163,21 @@ setInterval(() => {
             }
         });
     });
+}, 100);
+
+// check if score is 10
+let lastPowerupScore = 0;
+
+setInterval(() => {
+    if (score % 10 === 0 && score > lastPowerupScore) {
+        lastPowerupScore = score;
+        const powerup = document.createElement('div');
+        powerup.classList.add('powerup');
+        powerup.style.left = '100%';
+        document.body.appendChild(powerup);
+        powerup.style.animation = 'horizontal 10s linear infinite, vertical 1s ease-in-out infinite';
+        setTimeout(() => {
+            document.body.removeChild(powerup);
+        }, 5000); 
+    }
 }, 100);
