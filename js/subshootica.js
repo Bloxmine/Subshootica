@@ -97,3 +97,44 @@ audio.play();
 }
 );
 
+function detectCollision(element1, element2) {
+    const rect1 = element1.getBoundingClientRect();
+    const rect2 = element2.getBoundingClientRect();
+
+    return !(rect2.left > rect1.right || 
+             rect2.right < rect1.left || 
+             rect2.top > rect1.bottom ||
+             rect2.bottom < rect1.top);
+}
+
+setInterval(() => {
+    const torpedoes = document.querySelectorAll('.torpedo');
+    const squids = document.querySelectorAll('.squid');
+
+    squids.forEach(squid => {
+        torpedoes.forEach(torpedo => {
+            if (detectCollision(torpedo, squid)) {
+                // Create explosion element
+                const explosion = document.createElement('div');
+                explosion.className = 'explosion';
+
+                // Position explosion at the location of the squid
+                explosion.style.left = squid.style.left;
+                explosion.style.top = squid.style.top;
+
+                // Add explosion to document
+                document.body.appendChild(explosion);
+
+                // Remove squid and torpedo
+                document.body.removeChild(squid);
+                document.body.removeChild(torpedo);
+
+                // Remove explosion after 500ms
+                setTimeout(() => {
+                    document.body.removeChild(explosion);
+                }, 500);
+            }
+        });
+    });
+}, 100); // Adjust as needed
+

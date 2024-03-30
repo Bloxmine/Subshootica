@@ -160,7 +160,7 @@ body
     aspect-ratio: 1;
     transform: translate(-50%, -50%);
     border-radius: 10px;
-    z-index: 4;
+    z-index: 3;
 }
 
 .torpedo {
@@ -192,14 +192,12 @@ body
     background-image: var(--explosion-image);
     background-size: cover;
     background-repeat: no-repeat;
-    position: fixed;
+    position: absolute; /* Changed from fixed to absolute */
     width: 200px;
     left: 50%;
     top: 50%;
     aspect-ratio: 1;
-    transform: translate(-50%, -50%);
     border-radius: 10px;
-
 }
 
 @keyframes vibrate {
