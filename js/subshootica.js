@@ -26,8 +26,12 @@ document.addEventListener('mousemove', (event) => {
     }
 });
 
+let canFire = true; // Initialize flag
+
 document.addEventListener('keydown', (event) => {
-    if (isPickedUp && event.code === 'Space') {
+    if (isPickedUp && event.code === 'Space' && canFire) {
+        canFire = false; // Set flag to false
+
         const torpedo = document.createElement('div');
         torpedo.classList.add('torpedo');
         document.body.appendChild(torpedo);
@@ -47,6 +51,11 @@ document.addEventListener('keydown', (event) => {
         setTimeout(() => {
             document.body.removeChild(torpedo);
         }, animationDuration * 1000);
+
+        // Reset flag after 200ms
+        setTimeout(() => {
+            canFire = true;
+        }, 200);
     }
 });
 
@@ -107,34 +116,74 @@ function detectCollision(element1, element2) {
              rect2.bottom < rect1.top);
 }
 
+let score = 0; // Initialize score
+
 setInterval(() => {
     const torpedoes = document.querySelectorAll('.torpedo');
     const squids = document.querySelectorAll('.squid');
+    const mines = document.querySelectorAll('.mine');
+
+    mines.forEach(mine => {
+        torpedoes.forEach(torpedo => {
+            if (detectCollision(torpedo, mine)) {
+                // Check if mine has been hit before
+                if (!mine.hasBeenHit) {
+                    // Decrement score
+                    score--;
+
+                    // Update score display
+                    document.getElementById('score').textContent = `SCORE: ${score}`;
+
+                    // Mark mine as hit
+                    mine.hasBeenHit = true;
+                }
+
+                // Pause mine animation
+                mine.style.animationPlayState = 'paused';
+
+                // Change mine image to explosion
+                mine.style.backgroundImage = 'url(../images/explosion.png)';
+
+                // Remove torpedo
+                document.body.removeChild(torpedo);
+
+                // Remove mine after 500ms
+                setTimeout(() => {
+                    document.body.removeChild(mine);
+                }, 500);
+            }
+        });
+    });
 
     squids.forEach(squid => {
         torpedoes.forEach(torpedo => {
             if (detectCollision(torpedo, squid)) {
-                // Create explosion element
-                const explosion = document.createElement('div');
-                explosion.className = 'explosion';
+                // Check if squid has been hit before
+                if (!squid.hasBeenHit) {
+                    // Increment score
+                    score++;
 
-                // Position explosion at the location of the squid
-                explosion.style.left = squid.style.left;
-                explosion.style.top = squid.style.top;
+                    // Update score display
+                    document.getElementById('score').textContent = `SCORE: ${score}`;
 
-                // Add explosion to document
-                document.body.appendChild(explosion);
+                    // Mark squid as hit
+                    squid.hasBeenHit = true;
+                }
 
-                // Remove squid and torpedo
-                document.body.removeChild(squid);
+                // Pause squid animation
+                squid.style.animationPlayState = 'paused';
+
+                // Change squid image to explosion
+                squid.style.backgroundImage = 'url(../images/explosion.png)';
+
+                // Remove torpedo
                 document.body.removeChild(torpedo);
 
-                // Remove explosion after 500ms
+                // Remove squid after 500ms
                 setTimeout(() => {
-                    document.body.removeChild(explosion);
+                    document.body.removeChild(squid);
                 }, 500);
             }
         });
     });
 }, 100); // Adjust as needed
-
