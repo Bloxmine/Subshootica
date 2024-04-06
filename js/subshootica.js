@@ -1,6 +1,9 @@
 // cube variable, is actually the submarine.
 const cube = document.querySelector('.cube');
 let isPickedUp = false;
+let gameSpeed = 1;
+let cutsceneIsPlaying = true;
+// let speedMultiplier = 1;
 
 cube.addEventListener('click', () => {
     isPickedUp = !isPickedUp;
@@ -9,6 +12,32 @@ cube.addEventListener('click', () => {
     } else {
         cube.style.animation = '';
     }
+});
+
+let titlescreenIsPlaying = true;
+
+// load in titlescreen when page loads, before cutscene, press spacebar to continue
+document.addEventListener('DOMContentLoaded', () => {
+    const titlescreen = document.createElement('div');
+    titlescreen.classList.add('titlescreen');
+    document.body.appendChild(titlescreen);
+    document.addEventListener('keydown', (event) => {
+        if (event.code === 'Space') {
+            document.body.removeChild(titlescreen);
+            titlescreenIsPlaying = false;
+
+            // load in cutscene when page loads
+            if (!titlescreenIsPlaying) {
+                const cutscene = document.createElement('div');
+                cutscene.classList.add('cutscene');
+                document.body.appendChild(cutscene);
+                cutscene.style.animation = 'cutscene 10s linear';
+                setTimeout(() => {
+                    document.body.removeChild(cutscene);
+                }, 5000);
+            }
+        }
+    });
 });
 
 document.addEventListener('mousemove', (event) => {
@@ -47,6 +76,7 @@ document.addEventListener('keydown', (event) => {
         const acceleration = 2;
         const finalVelocity = initialVelocity + acceleration * animationDuration;
         torpedo.style.animation = `fire ${animationDuration}s linear`;
+        // cubic bezier timing function to make the torpedo speed up
         torpedo.style.animationTimingFunction = `cubic-bezier(0, 0, 1, ${finalVelocity / initialVelocity})`;
         setTimeout(() => {
             document.body.removeChild(torpedo);
@@ -58,45 +88,41 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    setInterval(() => {
-        const numDivs = 1;
-        for (let i = 0; i < numDivs; i++) {
-            const squid = document.createElement('div');
-            squid.classList.add('squid');
-            document.body.appendChild(squid);
-            const squidHeight = squid.offsetHeight;
-            const viewportHeight = window.innerHeight;
-            const randomY = Math.floor(Math.random() * (viewportHeight - squidHeight));
-            squid.style.top = randomY + 'px';
-            const animationDuration = 20;
-            squid.style.animationDuration = `${animationDuration}s`;
-            setTimeout(() => {
-                document.body.removeChild(squid);
-            }, animationDuration * 1000);
-        }
-    }, 2000);
-});
+setInterval(() => {
+    const numDivs = 1;
+    for (let i = 0; i < numDivs; i++) {
+        const squid = document.createElement('div');
+        squid.classList.add('squid');
+        document.body.appendChild(squid);
+        const squidHeight = squid.offsetHeight;
+        const viewportHeight = window.innerHeight;
+        const randomY = Math.floor(Math.random() * (viewportHeight - squidHeight));
+        squid.style.top = randomY + 'px';
+        const animationDuration = 20 / gameSpeed;
+        squid.style.animationDuration = `${animationDuration}s`;
+        setTimeout(() => {
+            document.body.removeChild(squid);
+        }, animationDuration * 1000);
+    }
+}, 2000);
 
-document.addEventListener('DOMContentLoaded', () => {
-    setInterval(() => {
-        const numDivs = 1;
-        for (let i = 0; i < numDivs; i++) {
-            const mine = document.createElement('div');
-            mine.classList.add('mine');
-            document.body.appendChild(mine);
-            const mineHeight = mine.offsetHeight;
-            const viewportHeight = window.innerHeight;
-            const randomY = Math.floor(Math.random() * (viewportHeight - mineHeight));
-            mine.style.top = randomY + 'px';
-            const animationDuration = 50;
-            mine.style.animationDuration = `${animationDuration}s`;
-            setTimeout(() => {
-                document.body.removeChild(mine);
-            }, animationDuration * 1000);
-        }
-    }, 2000);
-});
+setInterval(() => {
+    const numDivs = 1;
+    for (let i = 0; i < numDivs; i++) {
+        const mine = document.createElement('div');
+        mine.classList.add('mine');
+        document.body.appendChild(mine);
+        const mineHeight = mine.offsetHeight;
+        const viewportHeight = window.innerHeight;
+        const randomY = Math.floor(Math.random() * (viewportHeight - mineHeight));
+        mine.style.top = randomY + 'px';
+        const animationDuration = 50 / gameSpeed;
+        mine.style.animationDuration = `${animationDuration}s`;
+        setTimeout(() => {
+            document.body.removeChild(mine);
+        }, animationDuration * 1000);
+    }
+}, 2000);
 
 document.addEventListener('DOMContentLoaded', () => {
 let audio = new Audio('../audio/darkwater.mp3');
@@ -104,7 +130,7 @@ audio.loop = true;
 audio.play();
 }
 );
-
+// collqision detection
 function detectCollision(element1, element2) {
     const rect1 = element1.getBoundingClientRect();
     const rect2 = element2.getBoundingClientRect();
@@ -116,7 +142,6 @@ function detectCollision(element1, element2) {
 }
 
 let score = 0; // score init
-let checkIfTen = 0; // check if score is 10
 
 setInterval(() => {
     const torpedoes = document.querySelectorAll('.torpedo');

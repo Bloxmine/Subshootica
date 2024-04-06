@@ -16,6 +16,8 @@
     --background-front-image: url(../images/bg1.png);
     --font-main: 'NES', sans-serif;
     --powerup-image: url(../images/powerup.gif);
+    --cutscene-image: url(../images/story/story1.png);
+    --titlescreen-image: url(../images/story/titlescreen.png);
 }
 
 body 
@@ -38,7 +40,35 @@ body
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 10px;
+    z-index: 7;
+}
+
+.cutscene 
+{
+    background-image: var(--cutscene-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: 5;
+    pointer-events: none;
+}
+
+.titlescreen 
+{
+    background-image: var(--titlescreen-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 6;
+    pointer-events: none;
 }
 
 #score 
