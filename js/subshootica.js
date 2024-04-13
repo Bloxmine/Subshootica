@@ -32,9 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 cutscene.classList.add('cutscene');
                 document.body.appendChild(cutscene);
                 cutscene.style.animation = 'cutscene 10s linear';
-                setTimeout(() => {
-                    document.body.removeChild(cutscene);
-                }, 5000);
+
+                // Wait for the user to press the spacebar again to remove the cutscene
+                document.addEventListener('keydown', (event) => {
+                    if (event.code === 'Space') {
+                        document.body.removeChild(cutscene);
+                    }
+                });
             }
         }
     });
@@ -142,6 +146,21 @@ function detectCollision(element1, element2) {
 }
 
 let score = 0; // score init
+let lives = 3; // Initialize lives
+
+setInterval(() => {
+    const squids = document.querySelectorAll('.squid');
+    squids.forEach(squid => {
+        let squidRect = squid.getBoundingClientRect();
+        if (squidRect.left <= 0) {
+            lives--;
+            document.getElementById('lives').textContent = `LIVES: ${lives}`; // Assuming you have a 'lives' element in your HTML
+
+            // Optional: Remove the squid from the screen
+            document.body.removeChild(squid);
+        }
+    });
+}, 100);
 
 setInterval(() => {
     const torpedoes = document.querySelectorAll('.torpedo');
@@ -192,6 +211,7 @@ setInterval(() => {
 
 // check if score is 10
 let lastPowerupScore = 0;
+let powerupInView = false;
 
 setInterval(() => {
     if (score % 10 === 0 && score > lastPowerupScore) {
@@ -204,5 +224,16 @@ setInterval(() => {
         setTimeout(() => {
             document.body.removeChild(powerup);
         }, 5000); 
+
+        // Check for collision with cube
+        setInterval(() => {
+            const cubeRect = cube.getBoundingClientRect();
+            const powerupRect = powerup.getBoundingClientRect();
+            if (detectCollision(cube, powerup)) {
+                document.body.removeChild(powerup);
+                lives++;
+                document.getElementById('lives').textContent = `LIVES: ${lives}`;
+            }
+        }, 100);
     }
 }, 100);

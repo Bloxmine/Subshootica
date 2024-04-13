@@ -77,6 +77,17 @@ body
     font: 2em var(--font-main);
     color: var(--color-primary);
     left: 37%;
+    top: 26%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+}
+
+#lives 
+{
+    position: fixed;
+    font: 2em var(--font-main);
+    color: var(--color-primary);
+    left: 37%;
     top: 20%;
     transform: translate(-50%, -50%);
     z-index: 5;
