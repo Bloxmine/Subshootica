@@ -148,6 +148,13 @@ function detectCollision(element1, element2) {
 let score = 0; // score init
 let lives = 3; // Initialize lives
 
+function resetGame() {
+    score = 0;
+    lives = 3;
+    document.getElementById('score').textContent = `SCORE: ${score}`;
+    document.getElementById('lives').textContent = `LIVES: ${lives}`;
+}
+
 setInterval(() => {
     const squids = document.querySelectorAll('.squid');
     squids.forEach(squid => {
@@ -158,6 +165,11 @@ setInterval(() => {
 
             // Optional: Remove the squid from the screen
             document.body.removeChild(squid);
+
+            // Check if lives have reached zero
+            if (lives <= 0) {
+                resetGame();
+            }
         }
     });
 }, 100);
