@@ -146,13 +146,44 @@ function detectCollision(element1, element2) {
 }
 
 let score = 0; // score init
-let lives = 3; // Initialize lives
+let lives = 6; // Initialize lives
 
 function resetGame() {
     score = 0;
-    lives = 3;
+    lives = 6;
     document.getElementById('score').textContent = `SCORE: ${score}`;
     document.getElementById('lives').textContent = `LIVES: ${lives}`;
+}
+
+function pauseGameAndShowMessage() {
+    // Create the message element
+    const message = document.createElement('div');
+    message.classList.add('message');
+    message.textContent = 'TRY AGAIN!';
+    document.body.appendChild(message);
+
+    // Pause the game
+    document.querySelectorAll('.squid, .mine, .torpedo').forEach(element => {
+        element.style.animationPlayState = 'paused';
+    });
+
+    // Remove the message and reset the game after 3 seconds
+    setTimeout(() => {
+        document.body.removeChild(message);
+        resetGame();
+    }, 3000);
+}
+
+function resetGame() {
+    score = 0;
+    lives = 6;
+    document.getElementById('score').textContent = `SCORE: ${score}`;
+    document.getElementById('lives').textContent = `LIVES: ${lives}`;
+
+    // Resume the game
+    document.querySelectorAll('.squid, .mine, .torpedo').forEach(element => {
+        element.style.animationPlayState = 'running';
+    });
 }
 
 setInterval(() => {
@@ -168,7 +199,7 @@ setInterval(() => {
 
             // Check if lives have reached zero
             if (lives <= 0) {
-                resetGame();
+                pauseGameAndShowMessage();
             }
         }
     });
